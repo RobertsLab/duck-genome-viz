@@ -1,0 +1,41 @@
+---
+title: "02-gene_gff"
+output: html_document
+---
+
+```{r}
+library("tidyverse")
+library(rtracklayer)
+library(karyoploteR)
+```
+
+
+
+
+```{bash}
+head -5 feature-tracks/Panopea-generosa-vv0.74.a4.gene.gff3
+```
+
+
+```{bash}
+awk -F"\t" 'NR>3 {print $1"\t",$4"\t", $5}' feature-tracks/Panopea-generosa-vv0.74.a4.gene.gff3 | sed 's/PGA_scaffold1__77_contigs__length_89643857/1/g' | grep -v "scaffold" > feature-tracks/scf_01-gen.bed
+
+
+tail feature-tracks/scf_01-gen.bed
+```
+
+
+
+```{r}
+scf01_gene =  import("feature-tracks/scf_01-gen.bed")
+
+kp_test <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2", "18"))
+  
+kpPlotDensity(kp_test, data=scf01_gene,window.size = 1000000, data.panel=1)  
+
+
+
+
+
+
+```
