@@ -1,0 +1,18 @@
+---
+title: "01-scaffolds"
+output: html_document
+---
+
+
+```{r}
+#only needed if you do not have karyoploteR instatlled
+#if (!requireNamespace("BiocManager", quietly = TRUE))
+    #install.packages("BiocManager")
+
+#BiocManager::install("karyoploteR")
+```
+
+```{r}
+library(karyoploteR)
+
+```
