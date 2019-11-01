@@ -3,26 +3,47 @@ title: "03-methylation"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+library("tidyverse")
+library(rtracklayer)
+library(karyoploteR)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+duck.genome <- toGRanges(data.frame(chr=c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" ), start=c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), end=c(89643857,	69596280,	57743597, 65288255, 67248332, 61759565, 43120122, 61151155, 38581958, 53961475, 51449921, 50438331, 44396874, 45393038, 47938513, 31980953, 34923512,	27737463)))
 
-```{r cars}
-summary(cars)
+
+kp <- plotKaryotype(genome = duck.genome)
+
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+```{bash}
+cat feature-tracks/EPI-145_S38_L005_R1_001_val_1_bismark_bt2_pe.deduplicated.bismark.cov.destrand.10x.bedgraph | sed 's/PGA_scaffold1__77_contigs__length_89643857/1/g' |  grep -v "scaffold" > feature-tracks/scf_01-meth.bedgraph
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+tail feature-tracks/scf_01-meth.bedgraph
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+```{r}
+scf01_meth.bg <- read.csv("feature-tracks/scf_01-meth.bedgraph", sep = "\t", header = FALSE)
+
+head(scf01_meth.bg)
+
+
+scf01_meth_75.bedGraph <- filter(scf01_meth.bg, V4 > 75)
+
+head(scf01_meth_75.bedGraph)
+```
+
+```{r}
+write_delim(testv3.bedGraph, "analyses/testv3.bedGraph", delim = "\t", col_names = FALSE)
+```
+
+
+
+
+
