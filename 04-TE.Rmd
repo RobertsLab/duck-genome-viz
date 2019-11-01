@@ -1,0 +1,26 @@
+---
+title: "04-TE"
+output: html_document
+---
+```{r}
+library("tidyverse")
+library(rtracklayer)
+library(karyoploteR)
+```
+
+
+
+
+
+```{bash}
+head -5 feature-tracks/Panopea-generosa-vv0.74.a4.repeats.DNA.gff3
+```
+
+
+```{bash}
+
+awk -F"\t" 'NR>3 {print $1"\t",$4"\t", $5}' feature-tracks/Panopea-generosa-vv0.74.a4.repeats.DNA.gff3 | sed 's/PGA_scaffold2__36_contigs__length_69596280/2/g' | grep -v "scaffold" > feature-tracks/scf_02-TE.bed
+
+
+tail feature-tracks/scf_02-TE.bed
+```
