@@ -3,26 +3,68 @@ title: "05-DMR"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+library("tidyverse")
+library(rtracklayer)
+library(karyoploteR)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+bedfile <- read.csv("feature-tracks/amb_AllTimes_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+
+```{r}
+#for (i in nrow(bedfile)){
+bedfile[,1] <- gsub("__.*","",bedfile[,1])
+bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
+#}
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+View(bedfile)
+```
+
+
+
+```{r}
+write_delim(bedfile, "feature-tracks/amb_dmr.bed", delim = "\t", col_names = FALSE)
+```
+
+
+
+
+
+```{r}
+amb_dmr =  import("feature-tracks/amb_dmr.bed")
+
+```
+
+```{r}
+
+#kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2" ))
+kp <- plotKaryotype(genome = duck.genome)
+#kpAxis(kp, ymin=0, ymax=100, r0=NULL, r1=NULL, data.panel=1, col="gray50", cex=0.5)
+
+
+
+
+kpPlotDensity(kp, data=scf01_meth_75, window.size = 1000, data.panel=2, col=adjustcolor("green", 0.5), lwd=0.5, border=adjustcolor("green", 0.5), r0=0, r1=1) 
+  
+kpPlotDensity(kp, data=scf01_gene,window.size = 100000, data.panel=1)  
+
+amb_dmr
+kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
+
+kpPoints(kp, data=scf01_meth_75, x=scf01_meth_75$ranges, y=scf01_meth_75$score,
+           ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
+
+
+kpPlotRegions(kp, amb_dmr, col="red", data.panel=2, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+
+```
