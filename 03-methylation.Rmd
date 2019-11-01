@@ -37,6 +37,7 @@ head(scf01_meth.bg)
 scf01_meth_75.bedGraph <- filter(scf01_meth.bg, V4 > 75)
 
 head(scf01_meth_75.bedGraph)
+nrow(scf01_meth_75.bedGraph)
 ```
 
 ```{r}
@@ -48,25 +49,30 @@ write_delim(scf01_meth_75.bedGraph, "feature-tracks/scf01_meth_75.bedGraph", del
 
 ```{r}
 scf01_meth_75 = import.bedGraph("feature-tracks/scf01_meth_75.bedGraph")
-
+head(scf01_meth_75)
 ```
+
+
+
 
 ```{r}
 
-kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1"))
+kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2"))
 
 kpAxis(kp, ymin=0, ymax=100, r0=NULL, r1=NULL, data.panel=1, col="gray50", cex=0.5)
 
 
-kpPoints(kp, data=scf01_meth_75, x=scf01_meth_75$ranges, y=scf01_meth_75$score,
-           ymin=0, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("pink", 0.5), pch=".", cex=0.2)
+
 
 kpPlotDensity(kp, data=scf01_meth_75, window.size = 1000, data.panel=2, col=adjustcolor("green", 0.5), lwd=0.5, border=adjustcolor("green", 0.5), r0=0, r1=1) 
   
 kpPlotDensity(kp, data=scf01_gene,window.size = 100000, data.panel=1)  
 
 
-#kpPlotRegions(kp, scf01_meth_75, col="blue", r0=0, r1=.2, avoid.overlapping = TRUE, num.layers = 2)
+kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
+
+kpPoints(kp, data=scf01_meth_75, x=scf01_meth_75$ranges, y=scf01_meth_75$score,
+           ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
 
 
 ```
