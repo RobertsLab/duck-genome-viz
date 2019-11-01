@@ -16,3 +16,21 @@ output: html_document
 library(karyoploteR)
 
 ```
+
+
+
+```{r}
+duck.genome <- toGRanges(data.frame(chr=c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" ), start=c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), end=c(89643857,	69596280,	57743597, 65288255, 67248332, 61759565, 43120122, 61151155, 38581958, 53961475, 51449921, 50438331, 44396874, 45393038, 47938513, 31980953, 34923512,	27737463)))
+
+
+kp <- plotKaryotype(genome = duck.genome)
+```
+
+
+
+```{r}
+plotKaryotype(genome = duck.genome, plot.type=1, ideogram.plotter=kpAddCytobands, labels.plotter=kpAddChromosomeNames, chromosomes="auto", zoom=NULL, cytobands=NULL, plot.params=NULL, use.cache=TRUE, main=NULL)
+```
+
+
+
