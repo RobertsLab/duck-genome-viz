@@ -16,11 +16,11 @@ make genome
 duck.genome <- toGRanges(data.frame(chr=c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" ), start=c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), end=c(89643857,	69596280,	57743597, 65288255, 67248332, 61759565, 43120122, 61151155, 38581958, 53961475, 51449921, 50438331, 44396874, 45393038, 47938513, 31980953, 34923512,	27737463)))
 ```
 
-<<<<<<< HEAD
+
 
 =======
 read in bed files
->>>>>>> a019a5a72c58022680ecf60d6eef4a5916ea40c0
+
 ```{r}
 
 bedfile <- read.csv("feature-tracks/day10_AllpH_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
@@ -30,7 +30,6 @@ bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
 #}
 write_delim(bedfile, "feature-tracks/d10_dmr.bed", delim = "\t", col_names = FALSE)
 
-<<<<<<< HEAD
 d10_dmr =  import("feature-tracks/d10_dmr.bed")
 
 ```
@@ -47,15 +46,8 @@ write_delim(bedfile, "feature-tracks/amb_dmr.bed", delim = "\t", col_names = FAL
 
 amb_dmr =  import("feature-tracks/amb_dmr.bed")
 
-=======
-convert PGA_scaffold...length_... to just scaffold number
-```{r}
-bedfile[,1] <- gsub("__.*","",bedfile[,1])
-bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
->>>>>>> a019a5a72c58022680ecf60d6eef4a5916ea40c0
 ```
 
-preview the changes
 ```{r}
 
 bedfile <- read.csv("feature-tracks/day135_AllpH_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
@@ -65,7 +57,6 @@ bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
 #}
 write_delim(bedfile, "feature-tracks/d135_dmr.bed", delim = "\t", col_names = FALSE)
 
-<<<<<<< HEAD
 d135_dmr =  import("feature-tracks/d135_dmr.bed")
 
 ```
@@ -73,7 +64,7 @@ d135_dmr =  import("feature-tracks/d135_dmr.bed")
 
 ```{r}
 
-  bedfile <- read.csv("feature-tracks/day145_AllpH_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
+bedfile <- read.csv("feature-tracks/day145_AllpH_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
 #for (i in nrow(bedfile)){
 bedfile[,1] <- gsub("__.*","",bedfile[,1])
 bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
@@ -81,31 +72,19 @@ bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
 write_delim(bedfile, "feature-tracks/d145_dmr.bed", delim = "\t", col_names = FALSE)
 
 d145_dmr =  import("feature-tracks/d145_dmr.bed")
-=======
+
 write out the modified bedfile
-```{r}
 write_delim(bedfile, "feature-tracks/amb_dmr.bed", delim = "\t", col_names = FALSE)
 ```
 
-import the modified bedfile as a GRanges obj
-```{r}
-amb_dmr =  import("feature-tracks/amb_dmr.bed")
->>>>>>> a019a5a72c58022680ecf60d6eef4a5916ea40c0
 
-scf01_gene =  import("feature-tracks/scf_01-gen.bed")
 
-scf01_meth_75 = import.bedGraph("feature-tracks/scf01_meth_75.bedGraph")
 
-scf02_TE = import("feature-tracks/scf_02-TE.bed")
-```
 
-<<<<<<< HEAD
 
-=======
 plot 
->>>>>>> a019a5a72c58022680ecf60d6eef4a5916ea40c0
 ```{r}
-jpeg("amb_DMRs.jpg", width =3000, height = 4000)
+jpeg("figures/all_DMRs.jpg", width =3000, height = 4000)
 
 #kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2" ))
 kp <- plotKaryotype(genome = duck.genome, plot.type=2)
@@ -119,16 +98,13 @@ kp <- plotKaryotype(genome = duck.genome, plot.type=2)
 
 #kpDataBackground(kp, data.panel = 1, color = "lightblue")
 
-<<<<<<< HEAD
 
 #genes   
 kpPlotDensity(kp, data=scf01_gene,window.size = 10000, data.panel=2, col="yellow", r0=0, r1=1.1)  
 
 
 #kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
-=======
 kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
->>>>>>> a019a5a72c58022680ecf60d6eef4a5916ea40c0
 
 kpPoints(kp, data=scf01_meth_75, x=scf01_meth_75$ranges, y=scf01_meth_75$score, ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
 
@@ -158,10 +134,4 @@ plot.params <- getDefaultPlotParams(plot.type=2)
 plot.params
 ```
 
-<<<<<<< HEAD
-=======
-dev.off()
 
-
-```
->>>>>>> a019a5a72c58022680ecf60d6eef4a5916ea40c0
