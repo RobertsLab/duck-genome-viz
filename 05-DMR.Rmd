@@ -11,60 +11,110 @@ library(karyoploteR)
 
 
 
-```{r}
-bedfile <- read.csv("feature-tracks/amb_AllTimes_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
-```
-
-
-
 
 ```{r}
+
+bedfile <- read.csv("feature-tracks/day10_AllpH_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
 #for (i in nrow(bedfile)){
 bedfile[,1] <- gsub("__.*","",bedfile[,1])
 bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
 #}
+write_delim(bedfile, "feature-tracks/d10_dmr.bed", delim = "\t", col_names = FALSE)
+
+d10_dmr =  import("feature-tracks/d10_dmr.bed")
+
 ```
 
-```{r}
-View(bedfile)
-```
-
-
 
 ```{r}
+
+bedfile <- read.csv("feature-tracks/amb_AllTimes_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
+#for (i in nrow(bedfile)){
+bedfile[,1] <- gsub("__.*","",bedfile[,1])
+bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
+#}
 write_delim(bedfile, "feature-tracks/amb_dmr.bed", delim = "\t", col_names = FALSE)
-```
 
-
-
-
-
-```{r}
 amb_dmr =  import("feature-tracks/amb_dmr.bed")
 
 ```
 
 ```{r}
 
+bedfile <- read.csv("feature-tracks/day135_AllpH_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
+#for (i in nrow(bedfile)){
+bedfile[,1] <- gsub("__.*","",bedfile[,1])
+bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
+#}
+write_delim(bedfile, "feature-tracks/d135_dmr.bed", delim = "\t", col_names = FALSE)
+
+d135_dmr =  import("feature-tracks/d135_dmr.bed")
+
+```
+
+
+```{r}
+
+  bedfile <- read.csv("feature-tracks/day145_AllpH_DMR250bp_MCmax30_cov5x_rms_results_collapsed_AOV0.1.DMR.bed", header = FALSE, sep = "\t")
+#for (i in nrow(bedfile)){
+bedfile[,1] <- gsub("__.*","",bedfile[,1])
+bedfile[,1] <- gsub("PGA_scaffold","",bedfile[,1])
+#}
+write_delim(bedfile, "feature-tracks/d145_dmr.bed", delim = "\t", col_names = FALSE)
+
+d145_dmr =  import("feature-tracks/d145_dmr.bed")
+
+```
+
+
+```{r}
+
 #kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2" ))
-kp <- plotKaryotype(genome = duck.genome)
+kp <- plotKaryotype(genome = duck.genome, plot.type=2)
 #kpAxis(kp, ymin=0, ymax=100, r0=NULL, r1=NULL, data.panel=1, col="gray50", cex=0.5)
 
 
 
 
-kpPlotDensity(kp, data=scf01_meth_75, window.size = 1000, data.panel=2, col=adjustcolor("green", 0.5), lwd=0.5, border=adjustcolor("green", 0.5), r0=0, r1=1) 
-  
-kpPlotDensity(kp, data=scf01_gene,window.size = 100000, data.panel=1)  
+#kpPlotDensity(kp, data=scf01_meth_75, window.size = 1000, data.panel=2, col=adjustcolor("green", 0.5), lwd=0.5, border=adjustcolor("green", 0.5), r0=0, r1=1) 
 
-amb_dmr
-kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
+
+#kpDataBackground(kp, data.panel = 1, color = "lightblue")
+
+
+#genes   
+kpPlotDensity(kp, data=scf01_gene,window.size = 10000, data.panel=2, col="yellow", r0=0, r1=1.1)  
+
+
+#kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
 
 kpPoints(kp, data=scf01_meth_75, x=scf01_meth_75$ranges, y=scf01_meth_75$score,
            ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
 
 
-kpPlotRegions(kp, amb_dmr, col="red", data.panel=2, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+kpPlotRegions(kp, amb_dmr, col="red", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
 
+#d10_dmr
+
+kpPlotRegions(kp, d10_dmr, col="green", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+#d135_dmr
+
+kpPlotRegions(kp, d135_dmr, col="purple", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+#d145
+kpPlotRegions(kp, d145_dmr, col="blue", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
 
 ```
+
+
+
+
+
+
+
+```{r}
+plot.params <- getDefaultPlotParams(plot.type=2)
+plot.params
+```
+
