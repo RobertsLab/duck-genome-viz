@@ -24,3 +24,96 @@ awk -F"\t" 'NR>3 {print $1"\t",$4"\t", $5}' feature-tracks/Panopea-generosa-vv0.
 
 tail feature-tracks/scf_02-TE.bed
 ```
+
+
+
+```{r}
+scf02_TE =  import("feature-tracks/scf_02-TE.bed")
+
+```
+
+```{bash}
+
+awk -F"\t" 'NR>3 {print $1"\t",$4"\t", $5}' feature-tracks/Panopea-generosa-vv0.74.a4.repeats.DNA.gff3 | sed 's/PGA_scaffold2__36_contigs__length_69596280/2/g' | grep -v "scaffold" > feature-tracks/scf_02-TE.bed
+
+
+tail feature-tracks/scf_02-TE.bed
+
+
+```
+
+
+# All the LINES
+
+```{r}
+file <- read.csv("feature-tracks/Panopea-generosa-vv0.74.a4.repeats.LINE.gff3", header = FALSE, sep = "\t")
+
+
+
+#for (i in nrow(bedfile)){
+file[,1] <- gsub("__.*","",file[,1])
+file[,1] <- gsub("PGA_scaffold","",file[,1])
+#}
+
+head(file)
+
+
+a4_LINE = import.gff3(file)
+
+
+
+head(a4_LINE)
+```
+
+
+```{r}
+#kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2" ))
+kp <- plotKaryotype(genome = duck.genome, plot.type=2)
+#kpAxis(kp, ymin=0, ymax=100, r0=NULL, r1=NULL, data.panel=1, col="gray50", cex=0.5)
+
+
+
+
+
+
+#kpPlotDensity(kp, data=scf01_meth_75, window.size = 1000, data.panel=2, col=adjustcolor("green", 0.5), lwd=0.5, border=adjustcolor("green", 0.5), r0=0, r1=1) 
+
+
+#kpDataBackground(kp, data.panel = 1, color = "lightblue")
+
+
+#genes   
+kpPlotDensity(kp, data=a4_gene, window.size = 100000, data.panel=2, col="lightgrey", r0=0, r1=1.5)  
+
+
+#kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
+
+
+#amb_dmr
+
+kpPlotRegions(kp, amb_dmr, col="red", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+#d10_dmr
+
+kpPlotRegions(kp, d10_dmr, col="green", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+#d135_dmr
+
+kpPlotRegions(kp, d135_dmr, col="purple", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+#d145
+kpPlotRegions(kp, d145_dmr, col="blue", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+
+
+kpPoints(kp, data=ar4_meth90, x=ar4_meth90$ranges, y=ar4_meth90$score,
+           ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
+
+
+
+#LINE
+
+kpPlotRegions(kp, a4_LINE_b, col="red", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = NULL)
+
+```
+
