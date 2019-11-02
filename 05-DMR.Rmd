@@ -19,7 +19,7 @@ duck.genome <- toGRanges(data.frame(chr=c("1", "2", "3", "4", "5", "6", "7", "8"
 
 
 =======
-read in bed files
+read in bed files in separate chunks
 
 ```{r}
 
@@ -73,8 +73,7 @@ write_delim(bedfile, "feature-tracks/d145_dmr.bed", delim = "\t", col_names = FA
 
 d145_dmr =  import("feature-tracks/d145_dmr.bed")
 
-write out the modified bedfile
-write_delim(bedfile, "feature-tracks/amb_dmr.bed", delim = "\t", col_names = FALSE)
+
 ```
 
 
@@ -84,7 +83,7 @@ write_delim(bedfile, "feature-tracks/amb_dmr.bed", delim = "\t", col_names = FAL
 
 plot 
 ```{r}
-jpeg("figures/all_DMRs.jpg", width =3000, height = 4000)
+#jpeg("figures/all_DMRs.jpg", width =3000, height = 4000)
 
 #kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2" ))
 kp <- plotKaryotype(genome = duck.genome, plot.type=2)
@@ -100,13 +99,13 @@ kp <- plotKaryotype(genome = duck.genome, plot.type=2)
 
 
 #genes   
-kpPlotDensity(kp, data=scf01_gene,window.size = 10000, data.panel=2, col="yellow", r0=0, r1=1.1)  
+kpPlotDensity(kp, data=scf01_gene, window.size = 10000, data.panel=2, col="yellow", r0=0, r1=1.1)  
 
 
 #kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
 kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
 
-kpPoints(kp, data=scf01_meth_75, x=scf01_meth_75$ranges, y=scf01_meth_75$score, ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
+kpPoints(kp, data = scf01_meth_75, x=scf01_meth_75$ranges, y=scf01_meth_75$score, ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
 
 kpPlotRegions(kp, amb_dmr, col="red", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
 
