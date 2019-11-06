@@ -24,61 +24,47 @@ kp <- plotKaryotype(genome = duck.genome)
 ```{r}
 #methylation data from concat of all EPI reads at minimum of 10x coverage
 #500MB file
-PgAll <- read_delim("http://gannet.fish.washington.edu/seashell/snaps/PgALL.bed", delim = "\t", col_names = FALSE)
-names(PgAll)<-make.names(names(PgAll),unique = TRUE)
+Pg01m <- read_delim("http://gannet.fish.washington.edu/seashell/snaps/Pg01.txt", delim = " ", col_names = FALSE, cols(
+  X1 = col_character(),
+  X2 = col_double(),
+  X3 = col_double(),
+  X4 = col_integer()
+)
+)
 ```
 
 ```{r}
-head(PgAll)
-```
-
-
-
-```{r}
-PgALL.meth <- (PgAll %>% mutate(name = "meth") %>% select (X1, X2, X3, name, X4))
-```
-
-
-```{r}
-write.table(PgALL.meth, "feature-tracks/PgALLmeth.bed", col.names = FALSE, row.names = FALSE, quote = FALSE)
-
-```
-
-```{r}
-Pg_01.meth <- (PgAll %>% mutate(name = "meth") %>% select (X1, X2, X3, name, X4) %>% filter(X1 == "Scaffold_01"))
+head(Pg01m)
 ```
 
 
 ```{r}
-head(PgAll)
-PgAll %>% filter(X1 != "Scaffold_01 ") 
-```
-
-
-```{r}
-PgAll %>% mutate(name = "meth") %>% filter(X1 == "Scaffold_01") %>% select (X1, X2, X3, name, X4) %>% head
+Pg_01.meth <- (PgAll %>% filter(X1 == "Scaffold_01"))
 ```
 
 ```{r}
-write.table(Pg_01.meth, "feature-tracks/Pg01meth.bed", col.names = FALSE, row.names = FALSE, quote = FALSE)
+tail(Pg_01.meth)
+```
+
+
+
+```{r}
+write.table(Pg_01.meth, "feature-tracks/Pg01meth.bed", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
 
 ```
+
 
 ```{bash}
-head feature-tracks/PgALLmeth.bed
+head feature-tracks/Pg01meth.bed
 ```
 
 
 
 
 ```{r}
-PgALL_meth =  import("feature-tracks/PgALLmeth.bed")
+Pg01_meth =  import.bed("feature-tracks/Pg01meth.bed")
 ```
 
-
-```{r}
-head(PgALL_meth)
-```
 
 
 ```{r}

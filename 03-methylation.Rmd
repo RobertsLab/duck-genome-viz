@@ -55,6 +55,9 @@ head(scf01_meth_75)
 
 
 
+
+
+
 ```{r}
 
 #kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2" ))
