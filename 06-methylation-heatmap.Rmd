@@ -3,26 +3,76 @@ title: "06-methylation-heatmap"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+
+
+```{r}
+library("tidyverse")
+library(rtracklayer)
+library(karyoploteR)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+duck.genome <- toGRanges(data.frame(chr=c("Scaffold_01", "Scaffold_02", "Scaffold_03", "Scaffold_04", "Scaffold_05", "Scaffold_06", "Scaffold_07", "Scaffold_08", "Scaffold_09", "Scaffold_10", "Scaffold_11", "Scaffold_12", "Scaffold_13", "Scaffold_14", "Scaffold_15", "Scaffold_16", "Scaffold_17", "Scaffold_18" ), start=c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), end=c(89643857,	69596280,	57743597, 65288255, 67248332, 61759565, 43120122, 61151155, 38581958, 53961475, 51449921, 50438331, 44396874, 45393038, 47938513, 31980953, 34923512,	27737463)))
 
-```{r cars}
-summary(cars)
+
+kp <- plotKaryotype(genome = duck.genome)
+
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+#methylation data from concat of all EPI reads at minimum of 10x coverage
+#500MB file
+PgAll <- read_delim("http://gannet.fish.washington.edu/seashell/snaps/PgALL.bed", delim = "\t", col_names = FALSE)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+PgALL.meth <- (PgAll %>% mutate(name = "meth") %>% select (X1, X2, X3, name, X4))
+```
+
+```{r}
+write.table(PgALL.meth, "feature-tracks/PgALLmeth.bed", col.names = FALSE)
+
+```
+
+
+```{bash}
+head feature-tracks/PgALLmeth.bed
+```
+
+
+
+
+```{r}
+PgALL_meth =  import("feature-tracks/PgALLmeth.bed")
+```
+
+
+```{r}
+head(PgALL_meth)
+```
+
+
+```{r}
+duck.genome.old <- toGRanges(data.frame(chr=c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" ), start=c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), end=c(89643857,	69596280,	57743597, 65288255, 67248332, 61759565, 43120122, 61151155, 38581958, 53961475, 51449921, 50438331, 44396874, 45393038, 47938513, 31980953, 34923512,	27737463)))
+```
+
+
+
+```{r}
+kp.old <- plotKaryotype(genome = duck.genome.old, plot.type=1)
+
+y <- sin(x=c(1:length(kp.old))/2)
+
+kpHeatmap(kp.old, scf01_meth_75, y="3", colors = c("green", "black", "red"))
+
+
+
+```
+
+
+
+
+
+
