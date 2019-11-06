@@ -32,9 +32,9 @@ tail feature-tracks/scf_01-gen.bed
 ```{r}
 scf01_gene =  import("feature-tracks/scf_01-gen.bed")
 
-kp_test <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2", "18"))
+kp_test <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1"))
   
-kpPlotDensity(kp_test, data=scf01_gene,window.size = 1000000, data.panel=1)  
+kpPlotDensity(kp_test, data=scf01_gene,window.size = 100000, data.panel=1)  
 
 
 
@@ -42,3 +42,61 @@ kpPlotDensity(kp_test, data=scf01_gene,window.size = 1000000, data.panel=1)
 
 
 ```
+
+
+
+
+
+```{r}
+file <- read.csv("feature-tracks/Panopea-generosa-vv0.74.a4.gene.gff3", header = FALSE, sep = "\t")
+#for (i in nrow(bedfile)){
+file[,1] <- gsub("__.*","",file[,1])
+file[,1] <- gsub("PGA_scaffold","",file[,1])
+#}
+
+
+a4.gene <- select(file, V1, V4, V5) %>% filter(!grepl("##",V1))
+write_delim(a4.gene, "feature-tracks/ar4gene.bed", delim = "\t", col_names = FALSE)
+
+a4_gene =  import("feature-tracks/ar4gene.bed")
+```
+
+
+```{r}
+#kp <- plotKaryotype(genome=duck.genome, plot.type=2, chromosomes=c("1", "2" ))
+kp <- plotKaryotype(genome = duck.genome, plot.type=2)
+#kpAxis(kp, ymin=0, ymax=100, r0=NULL, r1=NULL, data.panel=1, col="gray50", cex=0.5)
+
+
+
+
+#kpPlotDensity(kp, data=scf01_meth_75, window.size = 1000, data.panel=2, col=adjustcolor("green", 0.5), lwd=0.5, border=adjustcolor("green", 0.5), r0=0, r1=1) 
+
+
+#kpDataBackground(kp, data.panel = 1, color = "lightblue")
+
+
+#genes   
+kpPlotDensity(kp, data=a4_gene, window.size = 100000, data.panel=2, col="lightgrey", r0=0, r1=1.5)  
+
+
+#kpPlotRegions(kp, scf02_TE, col="blue", r0=0, r1=NULL, avoid.overlapping = TRUE, num.layers = 5)
+
+kpPoints(kp, data=scf01_meth_75, x=scf01_meth_75$ranges, y=scf01_meth_75$score,
+           ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
+
+
+kpPlotRegions(kp, amb_dmr, col="red", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+#d10_dmr
+
+kpPlotRegions(kp, d10_dmr, col="green", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+#d135_dmr
+
+kpPlotRegions(kp, d135_dmr, col="purple", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+
+#d145
+kpPlotRegions(kp, d145_dmr, col="blue", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = 5)
+```
+

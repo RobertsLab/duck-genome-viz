@@ -45,6 +45,16 @@ tail feature-tracks/scf_02-TE.bed
 
 # All the LINES
 
+```{bash}
+head -4 feature-tracks/Panopea-generosa-vv0.74.a4.repeats.LINE.gff3
+```
+
+
+
+
+
+
+
 ```{r}
 file <- read.csv("feature-tracks/Panopea-generosa-vv0.74.a4.repeats.LINE.gff3", header = FALSE, sep = "\t")
 
@@ -55,15 +65,29 @@ file[,1] <- gsub("__.*","",file[,1])
 file[,1] <- gsub("PGA_scaffold","",file[,1])
 #}
 
-head(file)
 
 
-a4_LINE = import.gff3(file)
+write_delim(file, "feature-tracks/Pg_00.a4.repeats.LINE.gff3", delim = "\t", col_names = FALSE)
+
+
+
+
+
+a4_LINE = import("feature-tracks/Pg_00.a4.repeats.LINE.gff3")
 
 
 
 head(a4_LINE)
 ```
+
+
+```{bash}
+head feature-tracks/Pg_00.a4.repeats.LINE.gff3
+
+```
+
+
+
 
 
 ```{r}
@@ -113,7 +137,7 @@ kpPoints(kp, data=ar4_meth90, x=ar4_meth90$ranges, y=ar4_meth90$score,
 
 #LINE
 
-kpPlotRegions(kp, a4_LINE_b, col="red", data.panel=1, r0=NULL, r1=5, avoid.overlapping = TRUE, num.layers = NULL)
+#kpPlotRegions(kp, a4_LINE, col="red", data.panel=1, r0=NULL, r1=NULL, avoid.overlapping = FALSE, num.layers = NULL)
 
 ```
 
