@@ -24,70 +24,101 @@ kp <- plotKaryotype(genome = duck.genome)
 ```{r}
 #methylation data from concat of all EPI reads at minimum of 10x coverage
 #500MB file
-Pg01m <- read_delim("http://gannet.fish.washington.edu/seashell/snaps/Pg01.txt", delim = " ", col_names = FALSE, cols(
-  X1 = col_character(),
-  X2 = col_double(),
-  X3 = col_double(),
-  X4 = col_integer()
-)
-)
+Pg01m <- read_delim("http://gannet.fish.washington.edu/seashell/snaps/Pg01.txt", delim = " ", col_names = FALSE)
+
 ```
+```{r} 
+Pf01r <- Pg01m %>% mutate_at(vars(X4), funs(round(., 2)))
 
-```{r}
-head(Pg01m)
-```
-
-
-```{r}
-Pg_01.meth <- (PgAll %>% filter(X1 == "Scaffold_01"))
-```
-
-```{r}
-tail(Pg_01.meth)
 ```
 
 
 
 ```{r}
-write.table(Pg_01.meth, "feature-tracks/Pg01meth.bed", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
+head(Pf01r)
+```
+
+
+
+
+```{r}
+write.table(Pf01r, file = "feature-tracks/Pf01r.bedGraph", col.names = FALSE, row.names = FALSE, quote = FALSE, sep = "\t")
 
 ```
 
 
 ```{bash}
-head feature-tracks/Pg01meth.bed
+tail feature-tracks/Pf01r.bedGraph
+```
+
+
+
+```{bash}
+head feature-tracks/scf01_meth_75.bedGraph
+```
+
+
+```{r}
+scf01_meth_75 = import.bedGraph("feature-tracks/scf01_meth_75.bedGraph")
+head(scf01_meth_75)
+```
+
+```{r}
+#used TW to fix a `1e+05` et more - in position #FFS
+Pg01_meth = import.bedGraph("feature-tracks/Pf01r.bedGraph")
+head(Pg01_meth)
+```
+
+
+
+```{r}
+library(grDevices)
 ```
 
 
 
 
 ```{r}
-Pg01_meth =  import.bed("feature-tracks/Pg01meth.bed")
-```
+kp <- plotKaryotype(genome = duck.genome, chromosomes = c("Scaffold_01"), plot.type=1)
 
+kpPlotDensity(kp, data=Pg01_meth, window.size = 100000, data.panel=2, col="lightgrey", r0=0, r1=1.5) 
+
+#kpPoints(kp, data=Pg01_meth, x=Pg01_meth$ranges, y=Pg01_meth$score,ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
+
+#kpHeatmap(kp, data=Pg01_meth, x0=Pg01_meth$ranges, x1=Pg01_meth$ranges, y=Pg01_meth$score, ymin = 90, ymax = 100, r0=0.8, r1=1, color=c("orange", "black", "purple", "green"))
+  
+#kpLines(kp, data=Pg01_meth, y=Pg01_meth$score)
+
+
+#kpLines(kp, data=Pg01_meth, chr=NULL, x=Pg01_meth$ranges, y=Pg01_meth$score, ymin=NULL, ymax=NULL, data.panel=1, r0=NULL, r1=NULL)
+
+kpPlotHorizon(kp, data=Pg01_meth, x=Pg01_meth$ranges, y=Pg01_meth$score, col="redblue6")
+
+#kpPlotDensity(kp, data=Pg01_meth, window.size = 100000, data.panel=2, col="lightgrey", r0=0, r1=1.5) 
+
+
+
+```
 
 
 ```{r}
-duck.genome.old <- toGRanges(data.frame(chr=c("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18" ), start=c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), end=c(89643857,	69596280,	57743597, 65288255, 67248332, 61759565, 43120122, 61151155, 38581958, 53961475, 51449921, 50438331, 44396874, 45393038, 47938513, 31980953, 34923512,	27737463)))
+data.points <- toGRanges(data.frame(chr=c("chr1", "chr1"), start=c(1, 100), end=c(1, 100), y=c(-2, 2)))
+kp <- plotKaryotype(zoom=toGRanges("chr1:1-100"))
+kpLines(kp, data.points, r0=0, r1=0.5, ymin=-2, ymax=2)
+kpAbline(kp, h=c(-2,-1,0,1,2), col="#AAAAAA", r0=0, r1=0.5, ymin=-2, ymax=2)
+kpAxis(kp, r0=0, r1=0.5, ymin=-2, ymax=2)
+kpPlotHorizon(kp, data.points, r0=0.55, r1=1)
 ```
-
 
 
 ```{r}
-kp.old <- plotKaryotype(genome = duck.genome.old, plot.type=1)
-
-
-
-kpPlotHorizon(kp.old, scf01_meth_75, y="3", colors = c("green", "black", "red"))
-
-
-kpPlotHorizon()
-
-
+data.points <- toGRanges(data.frame(chr="chr1", start=1:100, end=1:100))
+data.points$y <- sin(start(data.points)/2)
+kp <- plotKaryotype(zoom=toGRanges("chr1:1-100"))
+kpLines(kp, data.points, r0=0, r1=0.5, ymin=-1, ymax=1)
+kpAbline(kp, h=c(-1,0,1), col="#AAAAAA", r0=0, r1=0.5, ymin=-1, ymax=1)
+kpAxis(kp, r0=0, r1=0.5, ymin=-1, ymax=1)
+kpPlotHorizon(kp, data.points, r0=0.55, r1=1)
 ```
-
-
-
-
 
 
