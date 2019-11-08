@@ -1,8 +1,8 @@
 ---
 title: "00-rsession"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r}
@@ -24,11 +24,4 @@ library(karyoploteR)
 sessionInfo()
 ```
 
-```{r}
-data.points <- toGRanges(data.frame(chr=c("chr1", "chr1"), start=c(1, 100), end=c(1, 100), y=c(-2, 2)))
-kp <- plotKaryotype(zoom=toGRanges("chr1:1-100"))
-kpLines(kp, data.points, r0=0, r1=0.5, ymin=-2, ymax=2)
-kpAbline(kp, h=c(-2,-1,0,1,2), col="#AAAAAA", r0=0, r1=0.5, ymin=-2, ymax=2)
-kpAxis(kp, r0=0, r1=0.5, ymin=-2, ymax=2)
-kpPlotHorizon(kp, data.points, r0=0.55, r1=1)
-```
+
