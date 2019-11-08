@@ -12,7 +12,7 @@
 
 # Variables
 meth_bed="../feature-tracks/Pf01r.bedgraph"
-percent_meth_histo="../data/circos/plotting/pgen_scaf01_percent_meth_histo.txt"
+percent_meth_histo="../circos/data/plotting/pgen_scaf01_percent_meth_histo.txt"
 species=pg
 
 # Read in individual columns (this is much faster than by line)
