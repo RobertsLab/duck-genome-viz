@@ -1,5 +1,11 @@
 #!/bin/bash
 
+
+# Variables
+meth_bed="../../../feature-tracks/"
+percent_meth_histo="../circos/plotting"
+species=pg
+
 while IFS=$'\t' read -r line
 do methylated=$(echo "${line}" | awk '$4 > 0')
    zero_check=$(echo "${line}" | awk '{print $4}')
@@ -9,4 +15,4 @@ do methylated=$(echo "${line}" | awk '$4 > 0')
 	 if [ "${zero_check}" != 0 ]
 	   then printf "%s\n" "${species}${scaffold_num} ${meth_position} ${meth_position} ${meth_percentage}"
    fi
- done < "${meth_bed}" >> ~/programs/circos-0.69-9/data/plots/pgen_percent_meth.txt
+ done < "${meth_bed}" >> "${percent_meth_histo}"
