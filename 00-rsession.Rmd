@@ -1,0 +1,27 @@
+---
+title: "00-rsession"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r}
+library(karyoploteR)
+sessionInfo()
+```
+
+
+```{r}
+  if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+  BiocManager::install("karyoploteR")
+```
+
+
+
+```{r}
+library(karyoploteR)
+sessionInfo()
+```
+
+
