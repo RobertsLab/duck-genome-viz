@@ -6,8 +6,8 @@
 # chr - pg1 1 0 89643857 chr1
 
 # Variables
-fasta_index=${HOME}/data/P_generosa/genomes/Panopea-generosa-v1.0.fa.fai
-karyo_file=karyotype.pg.txt
+fasta_index=../data/P_generosa/genomes/Panopea-generosa-v1.0.fa.fai
+karyo_file=../data/circos/karyotypes/karyotype.pg.txt
 species=pg
 
 while IFS=$'\t' read -r line
