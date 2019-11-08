@@ -2,8 +2,8 @@
 
 
 # Variables
-meth_bed="../../../feature-tracks/"
-percent_meth_histo="../circos/plotting"
+meth_bed="../feature-tracks/Pf01r.bedgraph"
+percent_meth_histo="../data/circos/plotting/pgen_scaf01_percent_meth_histo.txt"
 species=pg
 
 while IFS=$'\t' read -r line
