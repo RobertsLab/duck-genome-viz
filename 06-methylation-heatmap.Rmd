@@ -75,9 +75,17 @@ Pg01_meth = import.bedGraph("feature-tracks/Pf01r.bedGraph")
 head(Pg01_meth)
 ```
 ```{r}
-new <- head(Pg01_meth)
+new <- head(Pg01_meth, n=100000)
+new
 ```
 
+```{r}
+Pg_t <- tile(Pg01_meth, width = 50000)
+```
+
+```{r}
+head(Pg_t)
+```
 
 
 ```{r}
@@ -91,23 +99,25 @@ str(Pg01_meth)
 
 
 ```{r}
-kp <- plotKaryotype(genome = duck.genome, chromosomes = c("Scaffold_01"), plot.type=1)
+kp <- plotKaryotype(genome = duck.genome, chromosomes = c("Scaffold_01"), plot.type=2)
 #
 
-#kpPlotDensity(kp, data=Pg01_meth, window.size = 100000, data.panel=2, col="lightgrey", r0=0, r1=1.5) 
+#kpPlotDensity(kp, data=new, window.size = 10, data.panel=2, col="lightgrey", r0=0, r1=NULL) 
 
-#kpPoints(kp, data=Pg01_meth, x=Pg01_meth$ranges, y=Pg01_meth$score,ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
+kpPoints(kp, data=new, x=new$ranges, y=new$score,ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col=adjustcolor("dark blue"), pch=".", cex=1)
 
 #kpHeatmap(kp, data=a4_LINE, y=a4_LINE$score, ymin = 90, ymax = 100, r0=0.8, r1=1, colors = c("red", "black", "green"))
 
-kpHeatmap(kp, data=newnew, y=newnew$score, ymin = 90, ymax = 100, r0=0.8, r1=1, colors = c("red", "black", "green"))
+#kpHeatmap(kp, data=newnew, y=newnew$score, ymin = 90, ymax = 100, r0=0.8, r1=1, colors = c("red", "black", "green"))
   
 #kpLines(kp, data=Pg01_meth, y=Pg01_meth$score)
 
 
 #kpLines(kp, data=Pg01_meth, chr=NULL, x=Pg01_meth$ranges, y=Pg01_meth$score, ymin=NULL, ymax=NULL, data.panel=1, r0=NULL, r1=NULL)
 
-kpPlotHorizon(kp, data=Pg01_meth, x=Pg01_meth$ranges, y=Pg01_meth$score, col="redblue6")
+kpPlotHorizon(kp, data=new, x=new$ranges, y=new$score, data.panel=1, num.parts = 30, ymin = 0, ymax = 100)
+
+#kpPlotHorizon(kp, data=Pg01_meth, x=Pg01_meth$ranges, y=Pg01_meth$score, col="redblue6")
 
 #kpPlotDensity(kp, data=Pg01_meth, window.size = 100000, data.panel=2, col="lightgrey", r0=0, r1=1.5) 
 
