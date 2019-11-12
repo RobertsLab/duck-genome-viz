@@ -18,5 +18,5 @@ species=pg
 while IFS=$'\t' read -r scaffold start stop count
 do
   scaffold_num=$(echo "${scaffold}" | awk -F"[_\t]" '{print $2}' | sed 's/^0//')
-  printf "%s\n" "${species}${scaffold_num} ${start} ${start} ${count}"
+  printf "%s\n" "${species}${scaffold_num} ${start} ${stop} ${count}"
 done < "${bed}" >> "${circos_histo}"
