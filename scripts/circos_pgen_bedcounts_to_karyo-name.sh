@@ -10,8 +10,8 @@
 # pg1 54 100 3.12
 
 # Variables
-bed="../"
-circos_histo="../circos/data/plotting/"
+bed="../data/Panopea-generosa-v1.0.genes-per-1Mbp.txt"
+circos_histo="../circos/data/plotting/pgen_genes-per-1Mbp_histo.txt"
 species=pg
 
 # Read in individual columns (this is much faster than by line)
