@@ -11,16 +11,13 @@
 # pg1 54 54 3.12
 
 # Variables
-meth_bed="../feature-tracks/Pf01r.bedgraph"
-percent_meth_histo="../circos/data/plotting/pgen_scaf01_percent_meth_histo.txt"
+meth_density="../data/Panopea-generosa-v1.0.meth75-per-1Mbp.txt"
+meth_density_histo="../circos/data/plotting/pgen_meth75-per-1Mbp_histo.txt"
 species=pg
 
 # Read in individual columns (this is much faster than by line)
-while IFS=$'\t' read -r scaffold start stop meth_percentage
+while IFS=$'\t' read -r scaffold start stop count
 do
-   if [ "${meth_percentage}" != 0 ]
-	   then
-			 scaffold_num=$(echo "${scaffold}" | awk -F"[_\t]" '{print $2}' | sed 's/^0//')
-			 printf "%s\n" "${species}${scaffold_num} ${start} ${start} ${meth_percentage}"
-   fi
- done < "${meth_bed}" >> "${percent_meth_histo}"
+	scaffold_num=$(echo "${scaffold}" | awk -F"[_]" '{print $2}' | sed 's/^0//')
+	printf "%s\n" "${species}${scaffold_num} ${start} ${stop} ${count}"
+done < "${meth_density}" > "${meth_density_histo}"
