@@ -116,11 +116,11 @@ kp <- plotKaryotype(genome = duck.genome.01, chromosomes = c("Scaffold_01"), plo
 
 kpPoints(kp, data=new, x=new$ranges, y=new$score,ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col="black", pch=".", cex=0.002)
 
-#kpHeatmap(kp, data=new, y=new$score, data.panel=2, r1 =10)
+#kpHeatmap(kp, data=new, y=new$score, data.panel=1)
 
 #kpHeatmap(kp, data=newnew, y=newnew$score, ymin = 90, ymax = 100, r0=0.8, r1=1, colors = c("red", "black", "green"))
   
-#kpLines(kp, data=Pg01_meth, y=Pg01_meth$score)
+#kpLines(kp, data=new, y=new$score)
 
 
 #kpLines(kp, data=Pg01_meth, chr=NULL, x=Pg01_meth$ranges, y=Pg01_meth$score, ymin=NULL, ymax=NULL, data.panel=1, r0=NULL, r1=NULL)
@@ -134,6 +134,26 @@ kpPoints(kp, data=new, x=new$ranges, y=new$score,ymin=NULL, ymax=100, data.panel
 
 
 ```
+
+
+
+
+```{r}
+
+
+kp <- plotKaryotype(genome = duck.genome, plot.type=1)
+
+
+kpPoints(kp, data=Pg01_meth, x=Pg01_meth$ranges, y=Pg01_meth$score,ymin=90, ymax=100, data.panel=1, r0=NULL, r1=NULL, col="black", pch=".", cex=0.002)
+
+
+
+
+```
+
+
+
+
 
 
 
