@@ -1,0 +1,83 @@
+---
+title: "07-methylation-line"
+output: html_document
+---
+
+```{r}
+library("tidyverse")
+library(rtracklayer)
+library(karyoploteR)
+```
+
+
+```{r}
+
+duck.genome <- toGRanges(data.frame(chr=c("Scaffold_01", "Scaffold_02", "Scaffold_03", "Scaffold_04", "Scaffold_05", "Scaffold_06", "Scaffold_07", "Scaffold_08", "Scaffold_09", "Scaffold_10", "Scaffold_11", "Scaffold_12", "Scaffold_13", "Scaffold_14", "Scaffold_15", "Scaffold_16", "Scaffold_17", "Scaffold_18" ), start=c(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), end=c(89643857,	69596280,	57743597, 65288255, 67248332, 61759565, 43120122, 61151155, 38581958, 53961475, 51449921, 50438331, 44396874, 45393038, 47938513, 31980953, 34923512,	27737463)))
+
+
+kp <- plotKaryotype(genome = duck.genome)
+```
+
+```{r}
+Pg01_meth = import.bedGraph("feature-tracks/Pf01r.bedGraph")
+head(Pg01_meth)
+```
+
+```{r}
+new <- head(Pg01_meth, n=10000)
+new
+```
+
+
+```{r}
+
+kp <- plotKaryotype(genome = duck.genome, chromosomes = c("Scaffold_01"), plot.type=1)
+#
+
+#kpPlotHorizon(kp, data=new, x=new$ranges, y=new$score, data.panel=1)
+
+#kpPlotDensity(kp, data=Pg01_meth, window.size = 1000000, data.panel=1, col="lightgrey", r0=0, r1=NULL) 
+
+
+kp$plot.params$chromosome.height=1
+kp$plot.params$ideogramheight <-1
+kp$plot.params$data1inmargin <- -10
+kp$plot.params$data2inmargin <-30
+kp$plot.params$topmargin <-0
+kp$plot.params$bottommargin <-0
+kpAddCytobandsAsLine(kp, lwd=5)
+kpAddBaseNumbers(kp)
+#kpPlotRegions(kp, data=exons.sc)
+#kpPlotRegions(kp,data=HSP)
+#kpPlotDensity(kp, data=HSP, col = "red", data.panel=1,window.size = 100)
+kpPlotDensity(kp, data=Pg01_meth,window.size = 1000000)
+#kpPlotDensity(kp, data=test.cov,window.size=100000, col=alpha(cbPalette[4],0.9),data.panel=2, ymax=150000)
+#kpPlotDensity(kp, data=test.cov2,window.size = 100000, col="red",data.panel=1, ymax=40000, r1=0.9)
+
+
+
+
+
+
+
+kpPoints(kp, data=Pg01_meth, x=Pg01_meth$ranges, y=Pg01_meth$score,ymin=NULL, ymax=100, data.panel=1, r0=NULL, r1=NULL, col="black", pch=".", cex=0.002)
+
+#kpHeatmap(kp, data=new, y=new$score, data.panel=1)
+
+#kpHeatmap(kp, data=newnew, y=newnew$score, ymin = 90, ymax = 100, r0=0.8, r1=1, colors = c("red", "black", "green"))
+  
+#kpLines(kp, data=new, y=new$score)
+
+
+#kpLines(kp, data=Pg01_meth, chr=NULL, x=Pg01_meth$ranges, y=Pg01_meth$score, ymin=NULL, ymax=NULL, data.panel=1, r0=NULL, r1=NULL)
+
+
+
+#kpPlotHorizon(kp, data=Pg01_meth, x=Pg01_meth$ranges, y=Pg01_meth$score, col="redblue6")
+
+#kpPlotDensity(kp, data=Pg01_meth, window.size = 100000, data.panel=2, col="lightgrey", r0=0, r1=1.5) 
+
+
+
+```
+
